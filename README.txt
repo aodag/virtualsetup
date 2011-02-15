@@ -1,4 +1,4 @@
-flexenv
+virtualsetup
 ==================
 
 manage eggs for virtualenv
@@ -7,13 +7,8 @@ manage eggs for virtualenv
 USAGE
 ------------------------
 
-- create virtualenv for flexenv
-- install flexenv
+- create virtualenv for virtualsetup
+- install virtualsetup
 - create virtualenv for your project
-- manage eggs with flexenv
-
-TODO
------------------------
-
-- run pip to install packages.
+- manage eggs with virtualsetup
 

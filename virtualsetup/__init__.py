@@ -1,6 +1,5 @@
 import pkg_resources
 import site
-from argparse import ArgumentParser
 import os
 import tempfile
 import shutil
@@ -29,17 +28,20 @@ def easy_install(project_name, dest):
 
     
 
-def develop(args, env):
+def develop(packages_dir, env):
     if 'VIRTUAL_ENV' not in os.environ:
         print >> os.stderr, "use virtualenv"
         sys.exit()
     ws = pkg_resources.WorkingSet()
-    packages_dir = args.packages_dir
+
     if not os.path.isdir(packages_dir):
         os.mkdir(packages_dir)
+
     pth = os.path.join(os.environ['VIRTUAL_ENV'], 'lib', 'python2.6', 'site-packages', 'flexenv.pth')
-    develop_path = args.develop_path
+
+    develop_path = os.getcwd()
     develop_env = pkg_resources.Environment(search_path=[develop_path])
+
     dists = []
     for x in develop_env:
         for dist in develop_env[x]:
@@ -83,17 +85,9 @@ def _resolve_requires(dist, env, packagesdir, ws):
     
 
 
-parser = ArgumentParser()
-parser.add_argument('--packages-dir', action="store", 
-    default=os.path.join(os.environ['HOME'], '.flexenv'))
-command_parser = parser.add_subparsers()
-develop_parser = command_parser.add_parser('develop')
-develop_parser.add_argument('develop_path')
-develop_parser.set_defaults(func=develop)
+PACKAGES_DIR = '.virtualsetup'
 
 def main():
-    args = parser.parse_args()
-    env = pkg_resources.Environment(search_path=[args.packages_dir])
-    if hasattr(args, 'func'):
-        args.func(args, env)
+    env = pkg_resources.Environment(search_path=[PACKAGES_DIR])
+    develop(PACKAGES_DIR, env)
 

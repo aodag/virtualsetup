@@ -4,7 +4,7 @@ import os
 readme = open(os.path.join(os.path.dirname(__file__), 'README.txt')).read()
 
 setup(
-    name="flexenv",
+    name="virtualsetup",
     version="0.0",
     author="Atsushi Odagiri",
     author_email="aodagx@gmail.com",
@@ -13,11 +13,11 @@ setup(
     packages=find_packages(),
     description='manage eggs for virtalenv',
     long_description=readme,
-    install_requires=['distribute', 'argparse'],
-    test_suite='flexenv',
+    install_requires=['distribute'],
+    test_suite='virtualsetup',
     entry_points={
         "console_scripts":[
-            "flexenv=flexenv:main",
+            "virtualsetup=virtualsetup:main",
         ],
     },
 )

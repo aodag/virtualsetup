@@ -37,7 +37,10 @@ def develop(packages_dir, env):
     if not os.path.isdir(packages_dir):
         os.mkdir(packages_dir)
 
-    pth = os.path.join(os.environ['VIRTUAL_ENV'], 'lib', 'python2.6', 'site-packages', 'flexenv.pth')
+    if sys.platform == 'win32':
+        pth = os.path.join(os.environ['VIRTUAL_ENV'], 'Lib', 'site-packages', 'flexenv.pth')
+    else:
+        pth = os.path.join(os.environ['VIRTUAL_ENV'], 'lib', 'python2.6', 'site-packages', 'flexenv.pth')
 
     develop_path = os.getcwd()
     develop_env = pkg_resources.Environment(search_path=[develop_path])
@@ -91,3 +94,5 @@ def main():
     env = pkg_resources.Environment(search_path=[PACKAGES_DIR])
     develop(PACKAGES_DIR, env)
 
+if __name__ == '__main__':
+    main()

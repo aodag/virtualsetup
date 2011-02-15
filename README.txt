@@ -15,5 +15,5 @@ USAGE
 TODO
 -----------------------
 
-- run easy_install when distribution was not found.
+- run pip to install packages.
 

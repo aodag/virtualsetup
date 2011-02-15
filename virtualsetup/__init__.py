@@ -9,9 +9,17 @@ def easy_install(project_name, dest):
     results = []
     tmp = tempfile.mkdtemp()
     try:
-        args = os.path.join(os.environ['VIRTUAL_ENV'], 'bin', 'easy_install'), '-mUNxd', tmp, project_name
-        args += (dict(os.environ, PYTHONPATH=tmp),)
-        os.spawnle(os.P_WAIT, sys.executable, sys.executable, *args)
+        if sys.platform == 'win32':
+            import subprocess
+            cmd = os.path.join(os.environ['VIRTUAL_ENV'], 'Scripts', 'easy_install.exe')
+            args = cmd, '-mUNxd', tmp, project_name
+            print args
+            env = dict(os.environ, PYTHONPATH=tmp)
+            subprocess.call(args, env=env)
+        else:
+            args = os.path.join(os.environ['VIRTUAL_ENV'], 'bin', 'easy_install'), '-mUNxd', tmp, project_name
+            args += (dict(os.environ, PYTHONPATH=tmp),)
+            os.spawnle(os.P_WAIT, sys.executable, sys.executable, *args)
         env = pkg_resources.Environment([tmp])
         for d in env:
             dist = env[d][0]
